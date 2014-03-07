@@ -92,13 +92,33 @@ public:
 		return true;
 	}
 
+	/*
+		printMenu()
+		desc:
+			printing menu
+	*/
 	void printMenu()	{
 		cout<<"[+]Scanning Hard Drives.."<<endl;
 		PrintHardDrives();
 		
 		cout<<"[+]Enter Your choice: ";
 		cin>>this->chDrive;
+		//ValidateChar();
+		
 
+	}
+	
+	/*
+		ValidateChar()
+		desc:
+			check if the choosed hard-drive is a word 
+	*/
+	bool ValidateChar()	{
+		if(this->chDrive < 'A' && this->chDrive > 'Z')	{
+			cout<<"Wrong Hard Drive"<<endl;
+			return false;
+		}
+		return true;
 	}
 
 	//Print hard drives
@@ -111,10 +131,15 @@ public:
 		}
 	}
 	
+	//return handle to a specific file
+	HANDLE SpecificFile(wstring sPath)	{
+		return CreateFile(sPath, GENERIC_READ, 1, NULL, OPEN_EXISTING);
+	}
+
 	/*
 	gets 3 parameters = number of the specified hard drive, array of signatures
 	*/
-	bool doScan(int n, char arr, int c)	{
+	bool DoScan(int n, char arr, int c)	{
 	
 		return true;
 	}
@@ -125,32 +150,30 @@ public:
 
 	*/
 	char *GetSignatures()	{
-		
+			
 	}
 
 	~Scan()	{
-		cout << "Destructor.." <<endl;
+		
 	}
 
 };
 
 int main()	{
 	Scan obj;
-	vector<wstring> files;
+	vector<wstring> vFiles;
 
 	obj.Get_Drives();
 	obj.printMenu();
-	cout<<obj.chDrive<<endl;
-
+	//cout<<obj.chDrive<<endl;
 	
-	if (obj.ListFiles(L"c:\\", L"*", files)) {
-		for (vector<wstring>::iterator it = files.begin(); 
-			it != files.end(); 
-			++it) {
+	if (obj.ListFiles(L"c:\\", L"*", vFiles)) {
+		for (vector<wstring>::iterator it = vFiles.begin(); it != files.end();it++)	{
 			wcout << it->c_str() << endl;
 		}
 	}
 	
+	delete obj;
 	return 0;
 }
 
